@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it" class="dark"> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProtectMee | ${post_name}</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-900 dark:bg-zinc-900 dark:text-white transition-colors duration-300">
+
+
+  <header class="bg-white shadow dark:bg-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <a href="#" class="text-xl font-bold text-gray-900 dark:text-white">Logo</a>
+        </div>
+
+        <nav class="hidden md:flex space-x-8 items-center">
+          <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Home</a>
+          <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Chi siamo</a>
+          <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Contatti</a>
+        </nav>
+
+        <div class="flex items-center md:hidden">
+          <button id="menu-toggle" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
+                 viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+      <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Home</a>
+      <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Chi siamo</a>
+      <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Contatti</a>
+    </nav>
+  </header>
+
+  <main class="container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-10 gap-10">
+
+    <article class="lg:col-span-6 space-y-6 pr-6">
+      <h1 class="text-4xl font-bold mb-4">black title</h1>
+
+      <img 
+        src="https://via.placeholder.com/1000x500" 
+        alt="Immagine dell'articolo principale" 
+        class="w-full h-auto rounded-xl shadow-md dark:shadow-zinc-800 object-cover mb-6"
+      />
+
+      <!-- <p class="text-lg leading-relaxed">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. 
+        Cras ac neque at lorem pretium varius. Integer fermentum lacus at felis 
+        pretium, at efficitur sem posuere. Quisque bibendum, lacus nec gravida 
+        posuere, nisi augue efficitur enim, at elementum justo justo et libero.
+      </p> -->
+      <md-block>
+        ## Titolo dell'articolo: **Come Migliorare la Produttività Quotidiana**
+
+        La produttività è una delle competenze più importanti nella vita professionale e personale. In questo articolo vedremo alcune strategie semplici ma efficaci per migliorare la gestione del tempo e aumentare la concentrazione.
+
+        ---
+
+        ## 🧠 1. Inizia con una Routine Mattutina
+
+        Una buona giornata spesso comincia da una buona mattina. Ecco alcuni suggerimenti:
+
+        - Svegliati sempre alla stessa ora  
+        - Dedica 10 minuti alla meditazione  
+        - Fai una breve lista di obiettivi da raggiungere  
+
+        > “Il segreto del tuo successo si nasconde nella tua routine quotidiana.”
+
+        ---
+
+        ## ✍️ 2. Usa la Tecnica del Pomodoro
+
+        La tecnica del Pomodoro consiste nel lavorare per **25 minuti** e fare una **pausa di 5 minuti**.  
+        Dopo quattro cicli, prenditi una pausa più lunga di 15–20 minuti.
+
+        ### Perché funziona?
+
+        - Riduce la fatica mentale  
+        - Aumenta la concentrazione  
+        - Favorisce una migliore gestione del tempo  
+
+        ---
+
+        ## 📅 3. Pianifica la Settimana
+
+        Una pianificazione settimanale ti permette di evitare imprevisti e distribuire meglio i compiti.
+
+        ### Strumenti consigliati
+
+        - Google Calendar  
+        - Notion  
+        - Todoist  
+
+        ---
+
+        ## 💬 Conclusione
+
+        Migliorare la produttività non richiede cambiamenti drastici, ma costanza. Prova una di queste tecniche per una settimana e osserva i risultati!
+
+        Se ti è piaciuto questo articolo, **lascia un commento** o condividilo sui social!
+
+      </md-block>
+
+    </article>
+
+    <div class="hidden lg:block lg:col-span-1">
+      <div class="h-full w-px bg-gray-300 dark:bg-gray-700 mx-auto"></div>
+    </div>
+
+    <aside class="lg:col-span-3 space-y-6 pl-0">
+      <h2 class="text-2xl font-semibold mb-4">Altri articoli</h2>
+
+      <div class="space-y-4">
+        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow">
+          <img src="https://via.placeholder.com/400x200" alt="Immagine articolo" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold hover:text-blue-600 cursor-pointer">Titolo articolo 1</h3>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow">
+          <img src="https://via.placeholder.com/400x200" alt="Immagine articolo" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold hover:text-blue-600 cursor-pointer">Titolo articolo 2</h3>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow overflow-hidden hover:shadow-lg transition-shadow">
+          <img src="https://via.placeholder.com/400x200" alt="Immagine articolo" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="text-lg font-semibold hover:text-blue-600 cursor-pointer">Titolo articolo 3</h3>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    const toggleButton = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    toggleButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+  <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+
+
+</body>
+</html>
