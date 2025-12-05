@@ -1,17 +1,62 @@
 from flask import Flask, render_template, Response, request
+from dotenv import dotenv_values, load_dotenv
 from feedgen.feed import FeedGenerator
+from pymongo import MongoClient
 from datetime import datetime
 import markdown, base64
 import json, os, sys
-
-
 app = Flask(__name__)
 
-maintenance = False
-version = 0.1
+class DBException(Exception):
+    pass
+
+class env:
+    try:
+        load_dotenv("./.env")
+    except Exception as e:
+        raise(f"an error occurred while loading environment file! Exception: {e}")
+    config = dotenv_values()
+
+    ip = config.get("DB_IP")
+    port = config.get("DB_PORT")
+    username = config.get("DB_USERNAME")
+    password = config.get("DB_PASSWORD")
+    db_name = config.get("DB_NAME")
+    version = config.get("VERSION")
+    maintenance = config.get("MAINTENANCE")
+
+maintenance = True if env.maintenance == "True" else False
+version = env.version
+
+class DB():
+
+    def __init__(self, ip:str, port:str, username:str, password:str, db_name:str ,authentication=True):
+        c = ""
+        
+        if authentication:
+            c = f"{username}:{password}@"
+        
+        try:
+            client = MongoClient(f"mongodb://{c}{ip}:{port}/{db_name}")[db_name]
+        except Exception as e:
+            print(f"[!] An error occurred while connecting to the database, exception: {e}")
+            exit(1)
+        self.posts = client.get_collection("posts")
+        self.users = "" # TO DO
+
+    def get_post(self, postn: int) -> dict:
+        p: dict = self.posts.find_one({"post_id":postn})
+        if not p == None:
+            p.pop("_id")
+            return p
+        raise DBException("The post id inserted was not found")
+
+db = DB(env.ip, env.port, env.username, env.password, env.db_name)
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/rss")
 def readrss():
@@ -35,7 +80,6 @@ def readrss():
 
 @app.route("/get_articles", methods=["GET"])
 def get_articles():
-
     if maintenance:
         return Response(json.dumps({"status":"Ok", "output":"error", "message":"Impossibile recuperare gli articoli senza una quantità specifica!"}), 500)
 
@@ -43,11 +87,17 @@ def get_articles():
     try:
         
         n = request.args["n"]
-        ...
-        # BISOGNA AGGIUNGERE LA FUNZIONE DEGLI ARTICOLI!
-        return Response(json.dumps({"status":"Ok", "output":"success", "message":[]}), 200)
-    except:
-        return Response(json.dumps({"status":"Ok", "output":"error", "message":"Impossibile recuperare gli articoli senza una quantità specifica!"}), 500)
+        n = int(n)
+        p: list[dict] = []
+        for i in range(1, n):
+
+            try:
+                p.append(db.get_post(i))
+            except:
+                pass
+        return Response(json.dumps({"status":"Ok", "output":"success", "message":p}), 200)
+    except ValueError:
+        return Response(json.dumps({"status":"Ok", "output":"error", "message":"Impossibile recuperare gli articoli senza una quantità specifica!!"}), 500)
     
 
 
@@ -58,10 +108,20 @@ def post():
         int(n)
     except ValueError:
         return Response(json.dumps({"status":"Ok", "output":"error", "message":"Il numero dell'articolo non e' valido"}), 500)
+    n = int(n)
+    #Prendo dal database il contenuto del post, nel caso il post non venga trovato restituisco un errore!
+    
+    try:
+        post = db.get_post(n)
+    except DBException as e:
 
-    title = "Hello world!"
-    content = "IyBIZWxsbyB3b3JsZCEKCkluY3JlZGliaWxlIHJhZ2F6emksIGNpIHNpYW1vIHJpdXNjaXRpIQoKcXVlc3RvIGUnIGlsIHByaW1vIHBvc3QgZGVsIGJsb2csIGRvcG8gYW5uaSBkaSBwcmVwYXJhemlvbmUgc2lhbW8gZmluYWxtZW50ZSBvbmxpbmUhCgpub24gdmVkbyBsJ29yYSBkaSBwb3J0YXJ2aSB1biBzYWNjbyBkaSBjb250ZW51dGkgZGkgKip0dXR0aSoqIGkgdGlwaS4KCm5laSBwcm9zc2ltaSBnaW9ybmkgdmkgdGVuZ28gYWdnaW9ybmF0aSBzdSB0dXR0aSBnbGkgYWdnaW9ybmFtZW50aSBkZWwgc2l0byB3ZWIsIG1hIHBvdGV0ZSBjb250YXJlIHF1ZXN0YSB2ZXJzaW9uZSBjb21hIGxhIHByaW1hIHZlcnNpb25lIGRlbCBzaXRvIAoKQnkgKipPbm9mcmlvKiogb24gKipQcm90ZWN0TWVlLnh5eiBWMC4xKio="
-    author = "Onofrio"
+        print(f"Il post {n} non e' stato strovato, exception: {e}")
+        return Response(json.dumps({"status":"Ok", "output":"error", "message":"Il numero dell'articolo non e' valido"}), 500)
+
+    content = post["content"]
+    title = post["title"]
+    author = post["author"]
+    post_img = post["post_img"]
     #Converto il testo da markdown in html, dopo averlo decodificato dal base64
     html = markdown.markdown(
         base64.b64decode(content).decode(),
@@ -72,7 +132,7 @@ def post():
     return render_template(
         "post.html",
         title=title,
-        post_img="1.png",
+        post_img=post_img,
         content=html,
         author=author,
         version=version
