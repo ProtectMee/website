@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it" class="">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carica articolo | ProtectMee.xyz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        darkMode: 'class'
+    }
+    </script>
+    <!-- Marked.js per il parsing Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body class="bg-white dark:bg-zinc-900 text-black dark:text-white transition-colors duration-300">
+
+    <div class="min-h-screen p-6">
+        <header class="bg-white shadow dark:bg-zinc-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                <a href="#" class="text-xl font-bold text-gray-900 dark:text-white">Logo</a>
+                </div>
+
+                <nav class="hidden md:flex space-x-5 items-center">
+                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Home</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Chi siamo</a>
+                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Contatti</a>
+                </nav>
+
+                <div class="flex items-center md:hidden">
+                <button id="menu-toggle" class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                </div>
+            </div>
+            </div>
+
+            <nav id="mobile-menu" class="md:hidden hidden px-4 pb-4">
+            <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Home</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Chi
+                siamo</a>
+            <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Contatti</a>
+            </nav>
+        </header>
+        <!-- Title -->
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold">Publish your article!</h1>
+            
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Markdown Editor -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold">Scrivi qui l'articolo (Markdown)</label>
+                <textarea id="markdownInput" class="flex-1 p-2 bg-transparent border-0 border-b-2 border-gray-300 
+         dark:border-gray-600 focus:outline-none focus:ring-0 
+         focus:border-[#fd7e14] transition-colors resize-none" placeholder="# Titolo 
+Scrivi qui il tuo articolo..."></textarea>
+
+
+            </div>
+
+            <!-- Preview -->
+            <div class="flex flex-col">
+                <label class="mb-2 font-semibold">Preview articolo</label>
+                <div id="preview" class="flex-1 p-2 overflow-y-auto prose dark:prose-invert max-w-none">
+                    <p>La preview dell'articolo apparirà qui...</p>
+                </div>
+            </div>
+        </div>
+        <!-- Actions -->
+        <div class="flex justify-center items-center gap-3.5 mt-4">
+            <label class="cursor-pointer px-4 py-2 rounded bg-blue-600 text-white">
+                Carica immagine
+                <input type="file" accept="image/*" class="hidden" id="imageInput" />
+            </label>
+
+            <button class="px-4 py-2 rounded bg-green-600 text-white">
+                Pubblica articolo
+            </button>
+        </div>
+
+        <div class="flex justify-center items-center gap-3 mt-4">
+            <button id="toggleTheme" class="px-4 py-2 rounded bg-gray-200 dark:bg-gray-800">
+                Cambia tema!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const markdownInput = document.getElementById('markdownInput');
+        const preview = document.getElementById('preview');
+        const toggleTheme = document.getElementById('toggleTheme');
+
+        // Live preview markdown
+        markdownInput.addEventListener('input', () => {
+            preview.innerHTML = marked.parse(markdownInput.value);
+        });
+
+        // Theme toggle
+        toggleTheme.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+    </script>
+</body>
+
+</html>

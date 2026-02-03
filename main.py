@@ -103,7 +103,12 @@ def get_articles():
 
 @app.route("/post", methods=["GET"])
 def post():
-    n = request.args["n"]
+    
+    try:
+        n = request.args["n"]
+    except Exception:
+        return Response("C'e' stato un errore durante la richiesta del post!", 500)
+
     try:
         int(n)
     except ValueError:
