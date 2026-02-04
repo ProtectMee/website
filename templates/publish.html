@@ -18,8 +18,7 @@
 
 <body class="bg-white dark:bg-zinc-900 text-black dark:text-white transition-colors duration-300">
 
-    <div class="min-h-screen p-6">
-        <header class="bg-white shadow dark:bg-zinc-800">
+    <header class="bg-white shadow dark:bg-zinc-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -48,15 +47,34 @@
                 siamo</a>
             <a href="#" class="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">Contatti</a>
             </nav>
-        </header>
+    </header>
+
+    <div class="min-h-screen p-6">
+        
         <!-- Title -->
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">Publish your article!</h1>
             
         </div>
 
+
+
         <!-- Main Content -->
+        
+        <div class="flex flex-col">
+                <label class="mb-2 font-semibold">Scrivi qui il titolo dell'articolo!</label>
+                <input type="text" class="flex-1 p-2 bg-transparent border-0 border-b-2 border-gray-300 
+         dark:border-gray-600 focus:outline-none focus:ring-0 
+         focus:border-[#fd7e14] transition-colors resize-none" placeholder="Titolo"/>
+            
+            </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            
+            
+            
+
             <!-- Markdown Editor -->
             <div class="flex flex-col">
                 <label class="mb-2 font-semibold">Scrivi qui l'articolo (Markdown)</label>
